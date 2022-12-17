@@ -1,9 +1,9 @@
-from tkinter import Radiobutton
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from time import sleep
 
 
 def iniciar_driver():
@@ -25,30 +25,27 @@ def iniciar_driver():
 
 
 driver = iniciar_driver()
-driver.get('https://cursoautomacao.netlify.app/')
+driver.get('https://cursoautomacao.netlify.app/desafios.html')
 
-#tag(section,div,h4,button)
-# class(.btn)
-# combinação de class(.btn.btn-success)
-# Id (#dropDownMenuButton)
+botao1 = driver.find_element(By.ID, 'btn1')
+botao2 = driver.find_element(By.CLASS_NAME, 'btn2.btn.btn-dark')
+botao3 = driver.find_element(By.CLASS_NAME, 'btn2.btn.btn-warning')
 
-# Para encontrar valores exatos
-# input[class='form-check-input']
-# Inicia com algum valor
-# input[class^='form']
-# finaliza com algum valor
-# input[class$='input']
-# Contem algum valor
-# input[class*='check']
+if botao1.is_enabled():
+    print('botão 1 está habilitado')
+else:
+    print('botão 1 está desabilitado')
 
+if botao2.is_enabled():
+    print('botão 2 está habilitado')
+else:
+    print('botão 2 está desabilitado')
 
-elemento_h2 = driver.find_element(By.CSS_SELECTOR, 'h2')
-elemento_form_check = driver.find_element(By.CSS_SELECTOR, 'input[class="form-check-input"]')
+if botao3.is_enabled():
+    print('botão 3 está habilitado')
+else:
+    print('botão 3 está desabilitado')
 
-if elemento_h2 is not None:
-    print('Link home encontrado')
-if elemento_form_check is not None:
-    print('Link desafio encontrado')
 
 input('')
 driver.close()
