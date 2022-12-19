@@ -1,9 +1,11 @@
+from tabnanny import check
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from time import sleep
+from selenium.webdriver.support.select import Select
 
 
 def iniciar_driver():
@@ -26,30 +28,25 @@ def iniciar_driver():
 
 driver = iniciar_driver()
 
+
 # navegar até o site
-driver.get('https://cursoautomacao.netlify.app/')
-sleep(3)
-# encontrar e clickar no link de login
-botao_login = driver.find_element(By.LINK_TEXT, 'Login')
-sleep(1)
-botao_login.click()
-sleep(1)
-# encontrar e clickar no link senha
-campo_email = driver.find_element(By.NAME, 'email')
-sleep(1)
-# Digitar semail (login)
-campo_email.send_keys('willsantos.edf@gmail.com')
-sleep(1)
-# encontrar minha senha
-campo_senha = driver.find_element(By.ID, 'senha')
-sleep(1)
-# digitar senha
-campo_senha.send_keys('#Willi@m86')
-sleep(1)
-# encontrar e clickar no botão enviar
-botao_enviar = driver.find_element(By.CLASS_NAME, 'btn.btn-primary')
-sleep(1) 
-botao_enviar.click()
+driver.get('https://cursoautomacao.netlify.app/desafios.html')
+sleep(5)
+#driver.execute_script("window.scrollTo(0, 1600)")
+#sleep(2)
+paises = driver.find_element(By.XPATH, "//select[@id='paisesselect']")
+opcoes = Select(paises)
+
+# Selecionar por index
+opcoes.select_by_index(2)
+sleep(2)
+# Selecionar pelo valor
+opcoes.select_by_value('estadosunidos')
+sleep(2)
+# Selecionar pelo texto
+opcoes.select_by_index(3)
+sleep(2)
+opcoes.select_by_visible_text("Chille")
 
 input('')
 driver.close()
