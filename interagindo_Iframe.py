@@ -4,11 +4,12 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from time import sleep
+from selenium.webdriver.common.keys import Keys
 
 
 def iniciar_driver():
     chrome_options = Options()
-    arguments = ['--lang=pt-BR', '--window-size=800,600', '--incognito']
+    arguments = ['--lang=pt-BR', '--window-size=1300,1000', '--incognito']
     for argument in arguments:
         chrome_options.add_argument(argument)
 
@@ -25,30 +26,19 @@ def iniciar_driver():
 
 
 driver = iniciar_driver()
-# navegar até o site
 driver.get('https://cursoautomacao.netlify.app/')
-sleep(5)
-# encontrar o clicar no link de login
-botao_login = driver.find_element(By.LINK_TEXT, 'Login')
-sleep(5)
-botao_login.click()
+driver.execute_script('window.scrollTo(0,document.body.scrollHeight);')
 sleep(1)
-# encontrar e clicar no campo de email
-campo_email = driver.find_element(By.NAME, 'email')
-sleep(1)
-# digitar meu email
-campo_email.send_keys('jhonatan@hotmail.com')
-sleep(1)
-# encontrar e clicar no campo de senha
-campo_senha = driver.find_element(By.ID, 'senha')
-sleep(1)
-# digitar minha senha
-campo_senha.send_keys('1234567')
-sleep(1)
-# encontrar e clicar no botão enviar
-botao_login = driver.find_element(By.CLASS_NAME, 'btn.btn-primary')
-sleep(1)
-botao_login.click()
+# Encontrar a iframe
+iframe = driver.find_element(
+    By.XPATH, "//iframe[@src='https://cursoautomacao.netlify.app/desafios.html']")
 
+# Mudar para dentro da iframe
+driver.switch_to.frame(iframe)
+# Interagir com ela
+campo_nome = driver.find_element(By.ID, 'dadosusuario')
+campo_nome.send_keys('jhonatan')
+# Sair do iframe
+driver.switch_to.default_content()
 input('')
 driver.close()
